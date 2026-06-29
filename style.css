@@ -1,10 +1,7 @@
-/* ===========================================================
-   SMART LEARNING & EXAM SYSTEM — STYLESHEET
-   Tokens → Base → Login → Shell/Nav/Topbar → Cards → Views → Responsive
-   =========================================================== */
+
 
 :root{
-  /* Palette */
+
   --bg:            #0A0B14;
   --bg-soft:       #0D0F1C;
   --panel:         #12131F;
@@ -56,7 +53,7 @@
   }
 }
 
-/* ---------- Reset ---------- */
+
 *{ box-sizing: border-box; margin: 0; padding: 0; }
 html, body{ background: var(--bg); }
 body{
@@ -80,7 +77,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
   text-transform: uppercase; color: var(--cyan); margin-bottom: 10px;
 }
 
-/* ---------- Buttons ---------- */
+
 .btn{
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   font-weight: 600; font-size: 0.94rem; padding: 13px 22px; border-radius: 999px;
@@ -109,9 +106,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 }
 .text-input:focus{ border-color: var(--cyan); }
 
-/* ===========================================================
-   LOGIN SCREEN
-   =========================================================== */
+
 .login-screen{
   position: fixed; inset: 0; z-index: 50;
   display: flex; align-items: center; justify-content: center;
@@ -156,12 +151,10 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 }
 .existing-user-chip:hover{ background: var(--grad-primary); color: #0A0B14; border-color: transparent; }
 
-/* ===========================================================
-   APP SHELL
-   =========================================================== */
+
 .app-shell{ display: flex; min-height: 100vh; }
 
-/* ---------- Sidebar ---------- */
+
 .sidebar{
   width: var(--sidebar-w); flex-shrink: 0;
   background: linear-gradient(185deg, var(--panel-2), var(--bg-soft));
@@ -198,7 +191,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 }
 .sidebar-overlay.show{ opacity: 1; visibility: visible; }
 
-/* ---------- Main column / Topbar ---------- */
+
 .main-col{ flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
 .topbar{
@@ -240,9 +233,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .view-head h1{ font-size: clamp(1.5rem, 2.6vw, 2rem); margin-bottom: 8px; }
 .view-sub{ color: var(--text-dim); font-size: 0.95rem; }
 
-/* ===========================================================
-   CARDS (shared)
-   =========================================================== */
+
 .card{
   background: linear-gradient(160deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
   border: 1px solid var(--border);
@@ -272,9 +263,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .badge-chip.intermediate{ background: rgba(34,211,238,0.14); color: var(--cyan); border-color: rgba(34,211,238,0.35); }
 .badge-chip.advanced{ background: rgba(251,191,36,0.14); color: var(--warning); border-color: rgba(251,191,36,0.35); }
 
-/* ===========================================================
-   DASHBOARD
-   =========================================================== */
+
 .dash-grid{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1.4fr;
@@ -308,7 +297,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .ring-fill{
   fill: none; stroke: url(#none); stroke-width: 12; stroke-linecap: round;
   stroke: var(--cyan);
-  stroke-dasharray: 427; /* 2*pi*68 */
+  stroke-dasharray: 427; 
   stroke-dashoffset: 427;
   transition: stroke-dashoffset 900ms var(--ease);
 }
@@ -332,9 +321,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .quick-item-tag{ font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint); text-transform: uppercase; }
 .quick-item-xp{ font-family: var(--font-mono); color: var(--cyan); font-size: 0.82rem; font-weight: 600; }
 
-/* ===========================================================
-   TASKS
-   =========================================================== */
+
 .filter-row{ display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
 .chip{
   padding: 9px 16px; border-radius: 999px; font-size: 0.84rem; font-weight: 600;
@@ -384,9 +371,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .task-feedback.correct{ color: var(--success); }
 .task-feedback.incorrect{ color: var(--danger); }
 
-/* ===========================================================
-   QUIZ
-   =========================================================== */
+
 .quiz-card{ max-width: 640px; margin: 0 auto; }
 .quiz-intro{ text-align: center; padding: 16px 0; }
 .quiz-intro h3{ font-size: 1.2rem; margin-bottom: 10px; }
@@ -407,9 +392,8 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .quiz-score{ font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin: 12px 0 4px; }
 .quiz-xp-gained{ color: var(--cyan); font-family: var(--font-mono); font-weight: 600; margin-bottom: 22px; }
 
-/* ===========================================================
-   ANALYTICS
-   =========================================================== */
+
+
 .analytics-grid{
   display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px;
   grid-template-areas:
@@ -441,9 +425,8 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .weak-area-row .wa-count{ font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-faint); min-width: 70px; text-align: right; }
 .weak-areas-empty{ color: var(--text-faint); font-size: 0.88rem; text-align: center; padding: 20px 0; }
 
-/* ===========================================================
-   PROFILE
-   =========================================================== */
+
+
 .profile-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 @media (max-width: 980px){ .profile-grid{ grid-template-columns: 1fr; } }
 .profile-card{ text-align: center; }
@@ -458,9 +441,8 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
 .profile-note{ font-size: 0.86rem; color: var(--text-dim); margin-bottom: 18px; }
 .profile-actions{ display: flex; flex-direction: column; gap: 10px; }
 
-/* ===========================================================
-   CONFIRM MODAL / TOAST / XP FLOAT
-   =========================================================== */
+
+
 .modal-overlay{
   position: fixed; inset: 0; z-index: 500;
   background: rgba(5,6,14,0.7); backdrop-filter: blur(6px);
@@ -504,9 +486,7 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 700; line-height: 1.
   100%{ opacity: 0; transform: translate(-50%, -150%) scale(0.9); }
 }
 
-/* ===========================================================
-   RESPONSIVE — APP SHELL
-   =========================================================== */
+
 @media (max-width: 900px){
   .sidebar{
     position: fixed; left: 0; top: 0; height: 100vh;

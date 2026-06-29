@@ -1,31 +1,9 @@
 'use strict';
-
-/* ===========================================================
-   SMART LEARNING & EXAM SYSTEM — APP.JS
-   Vanilla ES6+. No dependencies. No frameworks.
-   Sections:
-     1. Storage / data model
-     2. Content banks (tasks + quiz questions)
-     3. Helpers (date, xp/level/grade math, toast, ripple)
-     4. Login / auth
-     5. Navigation (views, sidebar, topbar)
-     6. Dashboard rendering
-     7. Tasks view + task engine
-     8. Quiz engine
-     9. Analytics view + canvas chart
-     10. Profile view
-     11. Confirm modal (reset)
-     12. Init
-   =========================================================== */
-
-/* ---------------------------------------------------------
-   1. STORAGE / DATA MODEL
-   --------------------------------------------------------- */
-const DB_KEY = 'sles_db_v1';        // all users live here
-const SESSION_KEY = 'sles_session_v1'; // which username is currently active
+const DB_KEY = 'sles_db_v1';       
+const SESSION_KEY = 'sles_session_v1'; 
 
 function todayStr() {
-  return new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  return new Date().toISOString().slice(0, 10); 
 }
 
 function blankUser(username) {
@@ -37,10 +15,10 @@ function blankUser(username) {
     quizzesTaken: 0,
     correctAnswers: 0,
     wrongAnswers: 0,
-    completedTaskIds: [],          // task ids already solved correctly
-    mistakesByTopic: {},           // { html: n, css: n, js: n }
-    dailyLogins: {},               // { 'YYYY-MM-DD': count }
-    dailyActivity: {},             // { 'YYYY-MM-DD': tasksOrQuestionsCount }
+    completedTaskIds: [],          
+    mistakesByTopic: {},       
+    dailyLogins: {},             
+    dailyActivity: {},            
     lastLoginDate: null
   };
 }
@@ -64,8 +42,8 @@ function saveDB() {
   }
 }
 
-let db = loadDB();             // { [username]: userObject }
-let currentUsername = null;    // active session username
+let db = loadDB();             
+let currentUsername = null;    
 
 function getCurrentUser() {
   return db[currentUsername];
@@ -75,11 +53,6 @@ function persist() {
   saveDB();
 }
 
-/* ---------------------------------------------------------
-   2. CONTENT BANKS
-   --------------------------------------------------------- */
-
-// ----- Tasks: multiple choice + code-input exercises -----
 const TASKS = [
   {
     id: 't-html-1', topic: 'html', xp: 10, type: 'mcq',
@@ -164,7 +137,7 @@ const TASKS = [
   }
 ];
 
-// ----- Quiz: pool of questions for timed rounds -----
+
 const QUIZ_POOL = [
   { topic: 'html', q: 'What does HTML stand for?', options: ['Hyper Text Markup Language', 'Home Tool Markup Language', 'Hyperlinks Text Mark Language', 'Hyper Tool Multi Language'], answerIndex: 0 },
   { topic: 'html', q: 'Which tag creates a hyperlink?', options: ['<link>', '<a>', '<href>', '<nav>'], answerIndex: 1 },
@@ -183,9 +156,8 @@ const QUIZ_POOL = [
   { topic: 'js', q: 'Which method adds an item to the end of an array?', options: ['push', 'pop', 'shift', 'unshift'], answerIndex: 0 }
 ];
 
-/* ---------------------------------------------------------
-   3. HELPERS
-   --------------------------------------------------------- */
+
+
 function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
 function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 function shuffle(arr) {
@@ -197,7 +169,7 @@ function shuffle(arr) {
   return a;
 }
 
-// XP needed to FINISH a given level (level 1 needs 100, scales up slightly each level)
+
 function xpForLevel(level) {
   return 100 + (level - 1) * 40;
 }
@@ -244,7 +216,7 @@ function last7Dates() {
 }
 
 function dayStreak(user) {
-  // Counts consecutive days up to and including today with at least one login
+
   let streak = 0;
   for (let i = 0; i < 365; i++) {
     const d = new Date();
@@ -259,9 +231,7 @@ function dayStreak(user) {
   return streak;
 }
 
-/* ---------------------------------------------------------
-   Toast + ripple (shared UI utilities)
-   --------------------------------------------------------- */
+
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 
@@ -309,14 +279,12 @@ function flyXpFloat(amount, anchorEl) {
   float.style.top = `${y}px`;
   float.textContent = `+${amount} XP`;
   float.classList.remove('fly');
-  // restart animation
+
   void float.offsetWidth;
   float.classList.add('fly');
 }
 
-/* ---------------------------------------------------------
-   4. LOGIN / AUTH
-   --------------------------------------------------------- */
+
 const loginScreen = document.getElementById('loginScreen');
 const appShell = document.getElementById('appShell');
 const loginForm = document.getElementById('loginForm');
@@ -397,9 +365,7 @@ loginForm.addEventListener('submit', (e) => {
 document.getElementById('logoutBtn').addEventListener('click', logout);
 document.getElementById('switchUserBtn').addEventListener('click', logout);
 
-/* ---------------------------------------------------------
-   5. NAVIGATION (views, sidebar, topbar)
-   --------------------------------------------------------- */
+
 const VIEW_TITLES = {
   dashboard: 'Dashboard',
   tasks: 'Tasks',
@@ -426,12 +392,12 @@ function goToView(viewName) {
   topbarTitle.textContent = VIEW_TITLES[viewName] || 'Dashboard';
   closeSidebar();
 
-  // Render the relevant view fresh each time it's opened
+
   if (viewName === 'dashboard') renderDashboard();
   if (viewName === 'tasks') renderTasks();
   if (viewName === 'analytics') renderAnalytics();
   if (viewName === 'profile') renderProfile();
-  // quiz view keeps its own state machine; only reset if not mid-quiz
+
   if (viewName === 'quiz' && !quizState.active) resetQuizView();
 }
 
@@ -454,10 +420,8 @@ sidebarToggle.addEventListener('click', openSidebar);
 sidebarClose.addEventListener('click', closeSidebar);
 sidebarOverlay.addEventListener('click', closeSidebar);
 
-/* ---------------------------------------------------------
-   6. DASHBOARD RENDERING
-   --------------------------------------------------------- */
-const RING_CIRCUMFERENCE = 2 * Math.PI * 68; // matches r=68 in the SVG
+
+const RING_CIRCUMFERENCE = 2 * Math.PI * 68; 
 
 function topicLabel(topic) {
   return { html: 'HTML', css: 'CSS', js: 'JavaScript' }[topic] || topic;
@@ -503,7 +467,7 @@ function renderDashboard() {
   const ratio = clamp(xpIntoLevel / xpNeeded, 0, 1);
   const ringFill = document.getElementById('ringFill');
   const offset = RING_CIRCUMFERENCE * (1 - ratio);
-  // animate next frame so the transition actually plays from full to target
+
   requestAnimationFrame(() => { ringFill.style.strokeDashoffset = String(offset); });
 
   const { pct, total } = computeAccuracy(user);
@@ -518,7 +482,7 @@ function renderDashboard() {
   document.getElementById('todayTasks').textContent = user.dailyActivity[today] || 0;
   document.getElementById('suggestionText').textContent = buildSuggestion(user);
 
-  // Quick tasks: show up to 3 incomplete tasks
+
   const quickList = document.getElementById('quickTasksList');
   const incomplete = TASKS.filter((t) => !user.completedTaskIds.includes(t.id)).slice(0, 3);
   quickList.innerHTML = '';
@@ -545,9 +509,7 @@ function renderDashboard() {
   updateTopbar();
 }
 
-/* ---------------------------------------------------------
-   Shared scoring/award logic (used by tasks + quiz)
-   --------------------------------------------------------- */
+
 function awardXp(amount) {
   const user = getCurrentUser();
   user.xp += amount;
@@ -565,9 +527,7 @@ function recordAnswer(topic, wasCorrect) {
   user.dailyActivity[today] = (user.dailyActivity[today] || 0) + 1;
 }
 
-/* ---------------------------------------------------------
-   7. TASKS VIEW + TASK ENGINE
-   --------------------------------------------------------- */
+
 let currentTaskFilter = 'all';
 
 function renderTasks() {
@@ -705,9 +665,7 @@ document.getElementById('taskFilters').addEventListener('click', (e) => {
   renderTasks();
 });
 
-/* ---------------------------------------------------------
-   8. QUIZ ENGINE
-   --------------------------------------------------------- */
+
 const QUIZ_LENGTH = 5;
 const QUIZ_XP_PER_CORRECT = 12;
 
@@ -838,9 +796,7 @@ quizStartBtn.addEventListener('click', startQuiz);
 quizRetryBtn.addEventListener('click', startQuiz);
 quizNextBtn.addEventListener('click', advanceQuiz);
 
-/* ---------------------------------------------------------
-   9. ANALYTICS VIEW + CANVAS CHART
-   --------------------------------------------------------- */
+
 function renderAnalytics() {
   const user = getCurrentUser();
   if (!user) return;
@@ -891,7 +847,7 @@ function drawActivityChart(user) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  // Set actual pixel size from CSS layout for crisp rendering
+
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   const cssWidth = canvas.clientWidth || 560;
   const cssHeight = 220;
@@ -911,7 +867,7 @@ function drawActivityChart(user) {
   const barGap = 14;
   const barWidth = (chartW - barGap * (values.length - 1)) / values.length;
 
-  // gridlines
+
   ctx.strokeStyle = 'rgba(255,255,255,0.07)';
   ctx.lineWidth = 1;
   const gridLines = 4;
@@ -946,7 +902,7 @@ function drawActivityChart(user) {
     ctx.closePath();
     ctx.fill();
 
-    // value label
+
     if (val > 0) {
       ctx.fillStyle = '#9CA1BD';
       ctx.font = '11px Inter, sans-serif';
@@ -954,7 +910,7 @@ function drawActivityChart(user) {
       ctx.fillText(String(val), x + barWidth / 2, top - 6);
     }
 
-    // day label
+
     const d = new Date(dates[i]);
     const label = d.toLocaleDateString(undefined, { weekday: 'short' }).slice(0, 3);
     ctx.fillStyle = '#696E8C';
@@ -972,9 +928,7 @@ window.addEventListener('resize', () => {
   }
 });
 
-/* ---------------------------------------------------------
-   10. PROFILE VIEW
-   --------------------------------------------------------- */
+
 function renderProfile() {
   const user = getCurrentUser();
   if (!user) return;
@@ -998,9 +952,7 @@ function renderProfile() {
   document.getElementById('profileGrade').textContent = gradeFromAccuracy(pct, total);
 }
 
-/* ---------------------------------------------------------
-   11. CONFIRM MODAL (reset progress)
-   --------------------------------------------------------- */
+
 const confirmOverlay = document.getElementById('confirmOverlay');
 document.getElementById('resetDataBtn').addEventListener('click', () => {
   confirmOverlay.classList.add('open');
@@ -1026,9 +978,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* ---------------------------------------------------------
-   12. INIT
-   --------------------------------------------------------- */
+
 function renderAll() {
   renderDashboard();
   renderTasks();

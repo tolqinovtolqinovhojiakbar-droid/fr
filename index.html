@@ -12,9 +12,7 @@
 </head>
 <body>
 
-<!-- ============================================================
-     LOGIN SCREEN
-     ============================================================ -->
+    
 <div class="login-screen" id="loginScreen">
   <div class="login-bg" aria-hidden="true"></div>
   <div class="login-card">
@@ -40,12 +38,10 @@
   </div>
 </div>
 
-<!-- ============================================================
-     APP SHELL
-     ============================================================ -->
+
 <div class="app-shell hidden" id="appShell">
 
-  <!-- ---------- Sidebar ---------- -->
+
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <div class="brand">
@@ -89,10 +85,10 @@
 
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <!-- ---------- Main column ---------- -->
+
   <div class="main-col">
 
-    <!-- Top bar -->
+
     <header class="topbar">
       <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -111,10 +107,10 @@
       </div>
     </header>
 
-    <!-- Views -->
+
     <main class="view-area" id="viewArea">
 
-      <!-- ===================== DASHBOARD ===================== -->
+
       <section class="view active" id="view-dashboard" data-view-section="dashboard">
         <div class="view-head">
           <p class="eyebrow">Welcome back</p>
@@ -177,7 +173,7 @@
         </div>
       </section>
 
-      <!-- ===================== TASKS ===================== -->
+
       <section class="view" id="view-tasks" data-view-section="tasks">
         <div class="view-head">
           <p class="eyebrow">Daily tasks</p>
@@ -195,7 +191,7 @@
         <div class="task-grid" id="taskGrid"></div>
       </section>
 
-      <!-- ===================== QUIZ ===================== -->
+
       <section class="view" id="view-quiz" data-view-section="quiz">
         <div class="view-head">
           <p class="eyebrow">Timed practice</p>
@@ -204,14 +200,14 @@
         </div>
 
         <div class="card quiz-card" id="quizCard">
-          <!-- intro state -->
+
           <div class="quiz-intro" id="quizIntro">
             <h3>Ready for a 5-question round?</h3>
             <p>Covers HTML, CSS and JavaScript fundamentals. Your score and mistakes feed straight into Analytics.</p>
             <button class="btn btn-primary" id="quizStartBtn">Start quiz</button>
           </div>
 
-          <!-- active state -->
+
           <div class="quiz-active hidden" id="quizActive">
             <div class="quiz-progress-row">
               <span id="quizProgressText">Question 1 of 5</span>
@@ -224,7 +220,7 @@
             <button class="btn btn-primary hidden" id="quizNextBtn">Next question</button>
           </div>
 
-          <!-- result state -->
+
           <div class="quiz-result hidden" id="quizResult">
             <h3>Round complete</h3>
             <p class="quiz-score" id="quizScoreText">0 / 5 correct</p>
@@ -234,7 +230,7 @@
         </div>
       </section>
 
-      <!-- ===================== ANALYTICS ===================== -->
+
       <section class="view" id="view-analytics" data-view-section="analytics">
         <div class="view-head">
           <p class="eyebrow">Your data</p>
@@ -273,7 +269,7 @@
         </div>
       </section>
 
-      <!-- ===================== PROFILE ===================== -->
+
       <section class="view" id="view-profile" data-view-section="profile">
         <div class="view-head">
           <p class="eyebrow">Account</p>
@@ -315,9 +311,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     CONFIRM MODAL (reset progress)
-     ============================================================ -->
+
 <div class="modal-overlay" id="confirmOverlay">
   <div class="confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
     <h3 id="confirmTitle">Reset all progress?</h3>
@@ -329,14 +323,10 @@
   </div>
 </div>
 
-<!-- ============================================================
-     TOAST
-     ============================================================ -->
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<!-- ============================================================
-     XP FLOAT (animated +XP popup)
-     ============================================================ -->
+
 <div class="xp-float" id="xpFloat"></div>
 
 <script src="app.js"></script>
